@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Generator Nama Tamu</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --c1: #222831;
+        --c2: #393e46;
+        --c3: #948979;
+        --c4: #dfd0b8;
+        --bg: var(--c1);
+        --paper: var(--c2);
+        --ink: var(--c4);
+        --muted: color-mix(in srgb, var(--c4) 60%, var(--c3));
+        --line: color-mix(in srgb, var(--c4) 18%, transparent);
+        --f: "Jost", system-ui, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font: 400 17px/1.6 var(--f);
+        overflow-x: clip;
+      }
+      .wrap {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 0 20px 72px;
+      }
+      nav {
+        padding: 22px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      nav a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 15px;
+      }
+      nav a:hover {
+        color: var(--ink);
+      }
+      .logo {
+        font: 500 16px var(--f);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--ink) !important;
+      }
+      h1 {
+        font: 300 clamp(34px, 6vw, 52px)/1.05 var(--f);
+        letter-spacing: -0.03em;
+        margin: 18px 0 12px;
+      }
+      .lead {
+        color: var(--muted);
+        margin: 0 0 32px;
+        max-width: 52ch;
+      }
+      :focus-visible {
+        outline: 2px solid var(--ink);
+        outline-offset: 3px;
+        border-radius: 6px;
+      }
+      .card {
+        background: var(--paper);
+        border-radius: 20px;
+        padding: 28px 24px;
+        display: grid;
+        gap: 26px;
+      }
+      label,
+      .lab {
+        display: block;
+        font-weight: 500;
+        font-size: 17px;
+        margin-bottom: 4px;
+      }
+      .hint {
+        color: var(--muted);
+        font-size: 14px;
+        margin: 0 0 10px;
+      }
+      input,
+      textarea {
+        width: 100%;
+        font: 400 16px var(--f);
+        color: var(--ink);
+        background: var(--bg);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 13px 14px;
+      }
+      textarea {
+        resize: vertical;
+        min-height: 120px;
+        line-height: 1.55;
+      }
+      input::placeholder,
+      textarea::placeholder {
+        color: color-mix(in srgb, var(--c4) 35%, transparent);
+      }
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .chip {
+        font: 500 14px var(--f);
+        color: var(--ink);
+        background: transparent;
+        border: 1px solid var(--line);
+        border-radius: 99px;
+        padding: 9px 16px;
+        cursor: pointer;
+      }
+      .chip[aria-pressed="true"] {
+        background: var(--ink);
+        color: var(--c1);
+        border-color: var(--ink);
+      }
+      .btn {
+        font: 500 15px var(--f);
+        letter-spacing: 0.02em;
+        background: var(--ink);
+        color: var(--c1);
+        border: 1px solid var(--ink);
+        border-radius: 99px;
+        padding: 14px 26px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+      }
+      .btn:hover {
+        background: transparent;
+        color: var(--ink);
+      }
+      .btn.ghost {
+        background: transparent;
+        color: var(--ink);
+      }
+      .btn.ghost:hover {
+        background: var(--ink);
+        color: var(--c1);
+      }
+      .btn.sm {
+        padding: 9px 16px;
+        font-size: 13px;
+      }
+      .err {
+        color: #f0b4a8;
+        font-size: 15px;
+        min-height: 22px;
+        margin: 0;
+      }
+      h2 {
+        font: 300 30px/1.1 var(--f);
+        letter-spacing: -0.02em;
+        margin: 0;
+      }
+      .res {
+        margin-top: 44px;
+      }
+      .bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 14px;
+      }
+      .bar div {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .list {
+        border-top: 1px solid var(--line);
+      }
+      .rw {
+        display: grid;
+        grid-template-columns: 36px 1fr auto;
+        gap: 6px 12px;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--line);
+        align-items: center;
+      }
+      .no {
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .nm {
+        font-weight: 500;
+      }
+      .lk {
+        color: var(--muted);
+        font-size: 13px;
+        word-break: break-all;
+        display: block;
+      }
+      .ac {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: flex-end;
+      }
+      .empty {
+        color: var(--muted);
+        padding: 28px 0;
+        font-style: italic;
+      }
+      @media (max-width: 560px) {
+        .rw {
+          grid-template-columns: 28px 1fr;
+        }
+        .ac {
+          grid-column: 2;
+          justify-content: flex-start;
+        }
+        .card {
+          padding: 22px 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <nav>
+        <a class="logo" href="index.html">ClickMoment</a
+        ><a href="index.html">Kembali ke katalog</a>
+      </nav>
+      <h1>Generator nama tamu</h1>
+      <p class="lead">
+        Tempel link undangan, masukkan daftar tamu, lalu dapatkan link khusus
+        untuk setiap tamu. Nama tamu otomatis tampil di cover undangan.
+      </p>
+
+      <div class="card">
+        <div>
+          <label for="link">Link undangan</label>
+          <p class="hint">
+            Contoh: clickmoment.id/demo/template-01/index.html?id=raka-laras
+          </p>
+          <input
+            id="link"
+            type="text"
+            inputmode="url"
+            autocomplete="off"
+            placeholder="Tempel link undangan di sini"
+          />
+        </div>
+        <div>
+          <label for="names">Nama tamu</label>
+          <p class="hint">
+            Satu nama per baris. Mau langsung kirim ke WhatsApp tamu? Tambahkan
+            nomor setelah tanda |, misalnya: Budi Santoso | 08123456789
+          </p>
+          <textarea
+            id="names"
+            rows="6"
+            placeholder="Budi Santoso&#10;Siti Aisyah&#10;Keluarga Bapak Hendra"
+          ></textarea>
+        </div>
+        <div>
+          <span class="lab">Template ucapan</span>
+          <p class="hint">
+            Pilih salah satu, lalu ubah isinya kalau perlu. {nama} dan {link}
+            akan terisi otomatis.
+          </p>
+          <div
+            class="chips"
+            id="chips"
+            role="group"
+            aria-label="Template ucapan"
+          ></div>
+          <textarea
+            id="tpl"
+            rows="9"
+            style="margin-top: 12px"
+            aria-label="Isi template ucapan"
+          ></textarea>
+        </div>
+        <p class="err" id="err" role="alert"></p>
+        <div><button class="btn" id="go">Buat daftar nama tamu</button></div>
+      </div>
+
+      <section class="res" id="res" hidden>
+        <div class="bar">
+          <h2 id="ttl"></h2>
+          <div>
+            <button class="btn ghost sm" id="copyAll">Salin semua link</button>
+            <button class="btn ghost sm" id="csv">Unduh CSV</button>
+          </div>
+        </div>
+        <div class="list" id="list"></div>
+      </section>
+    </div>
+
+    <script>
+      const $ = (id) => document.getElementById(id);
+      const T = {
+        Formal:
+          "Kepada Yth.\nBapak/Ibu/Saudara/i {nama}\n\nDengan hormat, kami mengundang Anda untuk hadir di acara kami. Detail acara dapat dilihat pada tautan undangan berikut:\n{link}\n\nMerupakan suatu kehormatan bagi kami apabila Anda berkenan hadir. Terima kasih.",
+        Muslim:
+          "Assalamu'alaikum Warahmatullahi Wabarakatuh\n\nKepada Yth.\nBapak/Ibu/Saudara/i {nama}\n\nDengan memohon rahmat dan ridho Allah SWT, kami mengundang Anda untuk hadir di acara kami. Detail acara ada pada tautan berikut:\n{link}\n\nKehadiran dan doa restu Anda sangat berarti bagi kami.\nWassalamu'alaikum Warahmatullahi Wabarakatuh",
+        Nasrani:
+          "Salam sejahtera dalam kasih Tuhan Yesus Kristus\n\nKepada Yth.\nBapak/Ibu/Saudara/i {nama}\n\nDengan sukacita kami mengundang Anda untuk hadir dan memberi doa restu di acara kami. Detail acara:\n{link}\n\nTuhan Yesus memberkati.",
+        Hindu:
+          "Om Swastiastu\n\nKepada Yth.\nBapak/Ibu/Saudara/i {nama}\n\nAtas asung kertha wara nugraha Ida Sang Hyang Widhi Wasa, kami mengundang Anda untuk hadir di acara kami. Detail acara:\n{link}\n\nOm Santih, Santih, Santih, Om",
+        Khitanan:
+          "Assalamu'alaikum Warahmatullahi Wabarakatuh\n\nKepada Yth.\nBapak/Ibu/Saudara/i {nama}\n\nKami mengundang Anda untuk hadir di acara syukuran khitanan putra kami. Detail acara:\n{link}\n\nKehadiran dan doa Anda sangat kami harapkan.\nWassalamu'alaikum Warahmatullahi Wabarakatuh",
+        Aqiqah:
+          "Assalamu'alaikum Warahmatullahi Wabarakatuh\n\nKepada Yth.\nBapak/Ibu/Saudara/i {nama}\n\nKami mengundang Anda untuk hadir di acara syukuran aqiqah buah hati kami. Detail acara:\n{link}\n\nKehadiran dan doa Anda sangat kami harapkan.\nWassalamu'alaikum Warahmatullahi Wabarakatuh",
+        Birthday:
+          "Halo {nama}!\n\nKamu diundang ke pesta ulang tahun kami. Yuk datang dan rayakan bersama! Detail acara:\n{link}\n\nDitunggu kehadirannya ya.",
+        "Bahasa Inggris":
+          "Dear {nama},\n\nWe warmly invite you to celebrate our special day with us. You can find all the details in the invitation link below:\n{link}\n\nYour presence would mean the world to us. Thank you!",
+      };
+      let guests = [];
+
+      $("chips").innerHTML = Object.keys(T)
+        .map(
+          (k, i) =>
+            `<button class="chip" aria-pressed="${i === 0}">${k}</button>`,
+        )
+        .join("");
+      $("tpl").value = T.Formal;
+      $("chips").onclick = (e) => {
+        const b = e.target.closest(".chip");
+        if (!b) return;
+        [...$("chips").children].forEach((x) =>
+          x.setAttribute("aria-pressed", x === b),
+        );
+        $("tpl").value = T[b.textContent];
+      };
+
+      const esc = (s) =>
+        s.replace(
+          /[&<>"]/g,
+          (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c],
+        );
+
+      function makeLink(base, name) {
+        let u;
+        try {
+          u = new URL(/^https?:\/\//i.test(base) ? base : "https://" + base);
+        } catch {
+          return null;
+        }
+        u.searchParams.delete("to");
+        const s = u.toString();
+        return (
+          s + (s.includes("?") ? "&" : "?") + "to=" + encodeURIComponent(name)
+        );
+      }
+      function phoneOf(p) {
+        const d = (p || "").replace(/\D/g, "");
+        if (!d) return "";
+        return d.startsWith("62")
+          ? d
+          : d.startsWith("0")
+            ? "62" + d.slice(1)
+            : "62" + d;
+      }
+      const msgOf = (g) =>
+        $("tpl")
+          .value.replaceAll("{nama}", g.name)
+          .replaceAll("{link}", g.link);
+
+      function copy(text) {
+        if (navigator.clipboard && window.isSecureContext)
+          return navigator.clipboard.writeText(text);
+        const t = document.createElement("textarea");
+        t.value = text;
+        document.body.appendChild(t);
+        t.select();
+        try {
+          document.execCommand("copy");
+        } catch {}
+        t.remove();
+        return Promise.resolve();
+      }
+      function flash(btn, txt) {
+        const o = btn.dataset.o || btn.textContent;
+        btn.dataset.o = o;
+        btn.textContent = txt;
+        setTimeout(() => (btn.textContent = o), 1500);
+      }
+
+      $("go").onclick = () => {
+        const base = $("link").value.trim();
+        const seen = new Set();
+        const rows = $("names")
+          .value.split("\n")
+          .map((l) => l.trim())
+          .filter(Boolean)
+          .map((l) => {
+            const [n, p] = l.split("|").map((x) => x.trim());
+            return { name: n, phone: phoneOf(p) };
+          })
+          .filter(
+            (g) =>
+              g.name &&
+              !seen.has(g.name.toLowerCase()) &&
+              seen.add(g.name.toLowerCase()),
+          );
+        if (!base) {
+          $("err").textContent = "Isi link undangan dulu.";
+          $("link").focus();
+          return;
+        }
+        if (!rows.length) {
+          $("err").textContent = "Isi minimal satu nama tamu.";
+          $("names").focus();
+          return;
+        }
+        if (!makeLink(base, "x")) {
+          $("err").textContent =
+            "Link undangan tidak valid. Cek lagi penulisannya.";
+          $("link").focus();
+          return;
+        }
+        $("err").textContent = "";
+        guests = rows.map((g) => ({ ...g, link: makeLink(base, g.name) }));
+        render();
+        $("res").scrollIntoView({ behavior: "smooth", block: "start" });
+      };
+
+      function render() {
+        $("res").hidden = false;
+        $("ttl").textContent = guests.length + " tamu";
+        $("list").innerHTML = guests
+          .map(
+            (g, i) => `
+    <div class="rw">
+      <span class="no">${i + 1}</span>
+      <div><span class="nm">${esc(g.name)}</span><span class="lk">${esc(g.link)}</span></div>
+      <div class="ac">
+        <a class="btn ghost sm" href="${esc(g.link)}" target="_blank" rel="noopener">Uji</a>
+        <button class="btn ghost sm" data-i="${i}" data-a="link">Salin link</button>
+        <button class="btn ghost sm" data-i="${i}" data-a="msg">Salin pesan</button>
+        <a class="btn sm" target="_blank" rel="noopener" href="https://wa.me/${g.phone}?text=${encodeURIComponent(msgOf(g))}">Kirim WA</a>
+      </div>
+    </div>`,
+          )
+          .join("");
+      }
+      $("list").onclick = (e) => {
+        const b = e.target.closest("button[data-a]");
+        if (!b) return;
+        const g = guests[+b.dataset.i];
+        copy(b.dataset.a === "link" ? g.link : msgOf(g)).then(() =>
+          flash(b, "Tersalin"),
+        );
+      };
+      // pesan mengikuti isi template terbaru saat tombol WA diklik
+      $("list").addEventListener("mousedown", (e) => {
+        if (e.target.closest("a.sm[href*='wa.me']") && guests.length) render();
+      });
+      $("copyAll").onclick = () =>
+        copy(guests.map((g) => g.name + "\t" + g.link).join("\n")).then(() =>
+          flash($("copyAll"), "Tersalin"),
+        );
+      $("csv").onclick = () => {
+        const q = (s) => '"' + s.replace(/"/g, '""') + '"';
+        const csv =
+          "\uFEFFNo,Nama,Link,Pesan\n" +
+          guests
+            .map((g, i) => [i + 1, q(g.name), q(g.link), q(msgOf(g))].join(","))
+            .join("\n");
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(
+          new Blob([csv], { type: "text/csv;charset=utf-8" }),
+        );
+        a.download = "daftar-tamu.csv";
+        a.click();
+      };
+    </script>
+  </body>
+</html>
